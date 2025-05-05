@@ -1,0 +1,137 @@
+/* File: css/main.css */
+.homepage-banner {
+  width: 100%;
+  overflow: hidden;
+}
+
+.banner-image {
+  width: 100%;
+  height: 330px;
+  display: block;
+  object-fit: cover;
+}
+.uniform-image {
+  width: 200px;        /* set your preferred width */
+  height: 200px;       /* set your preferred height */
+  object-fit: cover;   /* fills the area while cropping excess */
+  border-radius: 10px; /* optional: makes edges rounded */
+}
+
+:root {
+  --color-primary: #00A651;
+  --color-secondary: #D11B27;
+  --color-accent: #A45BB3;
+  --font-family-base: 'Helvetica Neue', Arial, sans-serif;
+  --spacer: 1rem;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: var(--font-family-base);
+}
+
+body {
+  line-height: 1.6;
+  color: #333;
+}
+
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacer);
+  background: #000000;
+  border-bottom: 2px solid var(--color-primary);
+}
+
+.site-header .logo {
+  height: 50px;
+}
+
+.site-header nav ul {
+  list-style: none;
+  display: flex;
+  gap: var(--spacer);
+}
+
+.site-header nav a {
+  text-decoration: none;
+  color: var(--color-primary);
+  font-weight: bold;
+}
+
+.btn-primary {
+  display: inline-block;
+  padding: 0.75em 1.5em;
+  background: var(--color-primary);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+}
+
+.hero {
+  position: relative;
+  height: 60vh;
+  background: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+section {
+  padding: calc(var(--spacer) * 2) var(--spacer);
+}
+
+h2 {
+  margin-bottom: var(--spacer);
+  color: var(--color-secondary);
+}
+
+.product-grid,
+.themes-grid,
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacer);
+}
+
+.site-footer {
+  padding: var(--spacer);
+  text-align: center;
+  background: #222;
+  color: #fff;
+}
+
+form.custom-order {
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  background: #f9f9f9;
+  padding: 2em;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+label {
+  font-weight: bold;
+  color: #333;
+}
+input, textarea, select, button {
+  padding: 0.5em;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.error-message {
+  font-size: 0.9em;
+  color: #d11b27;
+  margin-top: 4px;
+}
+#priceEstimate {
+  font-weight: bold;
+  color: #00A651;
+}
+

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login | Chin's Piñatas</title>
+  <link rel="stylesheet" href="css/main.css" />
+  <style>
+    .login-section {
+      max-width: 400px;
+      margin: 5em auto;
+      padding: 2em;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    form label {
+      display: block;
+      margin-top: 1em;
+    }
+    form input {
+      width: 100%;
+      padding: 0.5em;
+      margin-top: 0.3em;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    form button {
+      margin-top: 1.5em;
+      padding: 0.7em 1.2em;
+      background-color: #00A651;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+    }
+    .login-link {
+      margin-top: 1em;
+      text-align: center;
+    }
+    .login-link a {
+      text-decoration: none;
+      color: #d11b27;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <main class="login-section">
+    <h1>Login</h1>
+    <form id="loginForm">
+      <label for="email">Email</label>
+      <input type="email" id="email" required />
+
+      <label for="password">Password</label>
+      <input type="password" id="password" required />
+
+      <button type="submit">Login</button>
+    </form>
+    <div class="login-link">
+      <p>Don't have an account? <a href="regform.html">Register here</a></p>
+      <p><a href="#" onclick="forgotPassword()">Forgot your password?</a></p>
+    </div>
+  </main>
+
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      const storedEmail = localStorage.getItem('registeredEmail');
+      const storedPassword = localStorage.getItem('registeredPassword');
+
+      if (email === storedEmail && password === storedPassword) {
+        localStorage.setItem('userLoggedIn', 'true');
+        localStorage.setItem('sessionStart', Date.now());
+        window.location.href = 'account.html';
+      } else {
+        alert('Invalid email or password. Try again.');
+      }
+    });
+
+    function forgotPassword() {
+      const email = prompt("Enter your registered email:");
+      const storedEmail = localStorage.getItem('registeredEmail');
+
+      if (email === storedEmail) {
+        const hint = localStorage.getItem('registeredPassword');
+        alert('Hint: Your password is "' + hint + '"');
+      } else {
+        alert("This email isn't registered.");
+      }
+    }
+
+    // Optional: session timeout in 10 mins
+    if (localStorage.getItem('userLoggedIn') === 'true') {
+      const start = parseInt(localStorage.getItem('sessionStart')) || Date.now();
+      const now = Date.now();
+      const tenMinutes = 10 * 60 * 1000;
+      if (now - start > tenMinutes) {
+        localStorage.removeItem('userLoggedIn');
+        localStorage.removeItem('sessionStart');
+        alert('Session expired. Please log in again.');
+        window.location.href = 'register.html';
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Custom Orders | Chin's Piñatas</title>
+  <link rel="stylesheet" href="css/main.css">
+  <style>
+    form.custom-order {
+      max-width: 600px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1em;
+    }
+    
+    .error-message {
+      font-size: 0.9em;
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <img src="images/logo.png" alt="Chin's Piñatas Logo" class="logo">
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="custom-orders.html">Custom Orders</a></li>
+        <li><a href="order-history.html">My Orders</a></li>
+        <li><a href="cart.html">Cart</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Customize Your Piñata</h1>
+    <form class="custom-order" id="customOrderForm">
+      <label>
+        Upload Reference Image:
+        <input type="file" id="pinataImage" name="image" accept="image/*" required>
+      </label>
+
+      <label>
+        Choose Shape:
+        <select id="shape" name="shape" required>
+          <option value="star">Star</option>
+          <option value="animal">Animal</option>
+          <option value="heart">Heart</option>
+          <option value="custom">Custom Shape</option>
+        </select>
+      </label>
+
+      <label>
+        Select Color Scheme:
+        <input type="text" id="colors" name="colors" placeholder="e.g. red, gold, white" required>
+      </label>
+
+      <label>
+        Signature Features:
+        <textarea name="features" placeholder="Describe any special features or themes..." rows="4"></textarea>
+      </label>
+
+      <label>
+        Your Name:
+        <input type="text" id="name" name="customerName" required>
+      </label>
+
+      <label>
+        Delivery Address:
+        <textarea id="address" name="address" rows="3" required></textarea>
+      </label>
+
+      <p><strong>Total Price: $<span id="priceEstimate">0.00</span></strong></p>
+      <input type="submit" value="Submit Order">
+    </form>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('customOrderForm');
+      const shapeSelect = form.elements['shape'];
+      const priceDisplay = document.getElementById('priceEstimate');
+
+      // Calculate price based on shape selection
+      function calculatePrice() {
+        let basePrice = 20;
+        switch (shapeSelect.value) {
+          case 'star': basePrice += 10; break;
+          case 'animal': basePrice += 15; break;
+          case 'heart': basePrice += 12; break;
+          case 'custom': basePrice += 25; break;
+        }
+        priceDisplay.textContent = basePrice.toFixed(2);
+      }
+
+      shapeSelect.addEventListener('change', calculatePrice);
+      form.addEventListener('DOMContentLoaded', calculatePrice);
+      window.addEventListener('load', calculatePrice);
+
+      form.addEventListener('submit', function(event) {
+        // Clear previous errors
+        const errorElements = form.querySelectorAll('.error-message');
+        errorElements.forEach(el => el.remove());
+
+        let valid = true;
+
+        // Validate image
+        const imageInput = document.getElementById('pinataImage');
+        const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+        if (!imageInput.files.length || !allowedTypes.includes(imageInput.files[0].type)) {
+          showError(imageInput, 'Please upload a valid image (JPG or PNG).');
+          valid = false;
+        }
+
+        // Validate shape
+        const shape = document.getElementById('shape');
+        if (!shape.value) {
+          showError(shape, 'Please select a shape.');
+          valid = false;
+        }
+
+        // Validate colors
+        const colors = document.getElementById('colors');
+        if (!colors.value.trim() || !colors.value.includes(',')) {
+          showError(colors, 'Enter at least two colors separated by commas.');
+          valid = false;
+        }
+
+        // Validate name
+        const name = document.getElementById('name');
+        if (!name.value.trim()) {
+          showError(name, 'Please enter your name.');
+          valid = false;
+        }
+
+        // Validate address
+        const address = document.getElementById('address');
+        if (!address.value.trim()) {
+          showError(address, 'Please enter your delivery address.');
+          valid = false;
+        }
+
+        if (!valid) {
+          event.preventDefault(); // prevent form from submitting
+        }
+
+        function showError(inputElement, message) {
+          const error = document.createElement('div');
+          error.className = 'error-message';
+          error.style.color = 'red';
+          error.style.marginTop = '4px';
+          error.textContent = message;
+          inputElement.insertAdjacentElement('afterend', error);
+        }
+      });
+    });
+  </script>
+</body>
+</html>

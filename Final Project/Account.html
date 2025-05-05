@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Account | Chin's Piñatas</title>
+  <link rel="stylesheet" href="css/main.css">
+  <style>
+    .account-section {
+      max-width: 800px;
+      margin: 2em auto;
+      padding: 1em;
+      background: #f9f9f9;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .profile-header {
+      text-align: center;
+      margin-bottom: 2em;
+    }
+    .profile-header img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 3px solid #00A651;
+    }
+    .account-form label {
+      display: block;
+      margin-top: 1em;
+      font-weight: bold;
+    }
+    .account-form input,
+    .account-form textarea,
+    .account-form select {
+      width: 100%;
+      padding: 0.5em;
+      margin-top: 0.3em;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .account-form button {
+      margin-top: 1.5em;
+      padding: 0.6em 1.5em;
+      background: #00A651;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .account-links {
+      margin-top: 2em;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1em;
+    }
+    .account-links a {
+      color: #d11b27;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <script>
+    if (localStorage.getItem('userLoggedIn') !== 'true') {
+      window.location.href = 'register.html';
+    }
+  </script>
+
+  <header class="site-header">
+    <img src="C:\Users\shavo\OneDrive\Desktop\Final Project\images\logo.jpeg" alt="Chin's Piñatas Logo" class="logo">
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="custom-orders.html">Custom Orders</a></li>
+        <li><a href="cart.html">Cart</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="Account.html">Account</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="FAQ.html">FAQ</a></li>
+        <li><a href="register.html">Login</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="account-section">
+    <div class="profile-header">
+      <h1>My Account</h1>
+      <input type="file" accept="image/*">
+      <p>Upload a profile picture</p>
+    </div>
+
+    <form class="account-form">
+      <label for="fullName">Full Name</label>
+      <input type="text" id="fullName" name="fullName">
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email">
+
+      <label for="address">Delivery Address</label>
+      <textarea id="address" name="address" rows="3"></textarea>
+
+      <label for="payment">Payment Method</label>
+      <select id="payment" name="payment">
+        <option value="credit">Credit Card</option>
+        <option value="paypal">PayPal</option>
+        <option value="cash">Cash on Delivery</option>
+      </select>
+
+      <label for="wishlist">Wishlist</label>
+      <textarea id="wishlist" name="wishlist" rows="3" placeholder="List your favorite piñatas or future purchases..."></textarea>
+
+      <button type="submit">Update Profile</button>
+    </form>
+
+    <div class="account-links">
+      <a href="order-history.html">View Order History</a>
+      <a href="products.html">Continue Shopping</a>
+      <a href="#" onclick="logout()">Logout</a>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2025 Chin's Piñatas. All rights reserved.</p>
+  </footer>
+
+  <script>
+    function logout() {
+      localStorage.removeItem('userLoggedIn');
+      localStorage.removeItem('sessionStart');
+      window.location.href = 'register.html';
+    }
+  </script>
+</body>
+</html>
+

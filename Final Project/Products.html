@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Products | Chin's Piñatas</title>
+  <link rel="stylesheet" href="css/main.css">
+  <style>
+    .btn-cart {
+      background: #00A651;
+      color: white;
+      border: none;
+      padding: 0.4em 0.7em;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .cart-count {
+      background: #d11b27;
+      color: white;
+      border-radius: 50%;
+      padding: 0.25em 0.6em;
+      font-size: 0.9em;
+      margin-left: 0.4em;
+    }
+    .product-card img {
+      width: 250px;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <img src="images/logo.jpeg" alt="Chin's Piñatas Logo" class="logo">
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="custom-orders.html">Custom Orders</a></li>
+        <li><a href="cart.html">Cart (<span id="cartCount">0</span>)</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="account.html">Account</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="register.html">Login</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="products-page">
+    <h1>Our Products</h1>
+
+    <div class="filters">
+      <input type="text" id="filter-search" placeholder="Search products...">
+      <select id="filter-price">
+        <option value="all">All Prices</option>
+        <option value="0-20">$0 - $20</option>
+        <option value="20-50">$20 - $50</option>
+        <option value="50+">$50+</option>
+      </select>
+      <select id="filter-theme">
+        <option value="all">All Themes</option>
+        <option value="birthday">Birthday</option>
+        <option value="holiday">Holiday</option>
+        <option value="custom">Custom</option>
+        <option value="graduation">Graduation</option>
+      </select>
+    </div>
+
+    <div id="product-grid" class="product-grid"></div>
+  </main>
+
+  <script>
+    const productData = [
+      { name: "Fiesta Star", price: 29.99, theme: "birthday" },
+      { name: "Holiday Penguin", price: 34.50, theme: "holiday" },
+      { name: "Rainbow Llama", price: 22.00, theme: "birthday" },
+      { name: "Super Hero Smash", price: 39.99, theme: "custom" },
+      { name: "Princess Dream", price: 27.50, theme: "birthday" },
+      { name: "Graduation Cap", price: 31.00, theme: "graduation" },
+      { name: "Taco Time", price: 23.99, theme: "custom" },
+      { name: "Santa Surprise", price: 36.00, theme: "holiday" },
+      { name: "Mermaid Splash", price: 28.45, theme: "birthday" },
+      { name: "Rocket Adventure", price: 42.75, theme: "custom" },
+      { name: "Holiday Moose", price: 25.00, theme: "holiday" },
+      { name: "Birthday Dino", price: 30.00, theme: "birthday" },
+      { name: "Grad Owl", price: 29.50, theme: "graduation" },
+      { name: "Space Alien", price: 35.99, theme: "custom" },
+      { name: "Jolly Reindeer", price: 38.00, theme: "holiday" },
+      { name: "Pineapple Party", price: 24.00, theme: "birthday" },
+      { name: "Laser Tag", price: 40.00, theme: "custom" },
+      { name: "Winter Fox", price: 26.25, theme: "holiday" },
+      { name: "Royal Castle", price: 37.49, theme: "birthday" },
+      { name: "Fireworks Night", price: 33.30, theme: "holiday" }
+    ];
+
+    function updateCartCount() {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const totalItems = cart.reduce((acc, item) => acc + (item.quantity || 1), 0);
+      document.getElementById('cartCount').textContent = totalItems;
+    }
+
+    function renderProducts() {
+      const grid = document.getElementById('product-grid');
+      grid.innerHTML = productData.map((product, i) => `
+        <div class="product-card" data-name="${product.name}" data-price="${product.price}" data-theme="${product.theme}">
+          <img src="images/product${i + 1}.jpg" alt="${product.name}">
+          <h3>${product.name}</h3>
+          <p>$${product.price.toFixed(2)}</p>
+          <button class="btn-cart" data-name="${product.name}" data-price="${product.price}">Add to Cart</button>
+        </div>
+      `).join('');
+    }
+
+    function applyFilters() {
+      const searchTerm = document.getElementById('filter-search').value.toLowerCase();
+      const [minP, maxP] = (() => {
+        switch(document.getElementById('filter-price').value) {
+          case '0-20': return [0, 20];
+          case '20-50': return [20, 50];
+          case '50+': return [50, Infinity];
+          default: return [0, Infinity];
+        }
+      })();
+      const theme = document.getElementById('filter-theme').value;
+      const cards = Array.from(document.querySelectorAll('.product-card'));
+
+      cards.forEach(card => {
+        const name = card.dataset.name.toLowerCase();
+        const price = parseFloat(card.dataset.price);
+        const cardTheme = card.dataset.theme;
+        const matchesSearch = name.includes(searchTerm);
+        const matchesPrice = price >= minP && price <= maxP;
+        const matchesTheme = (theme === 'all') || (cardTheme === theme);
+        card.style.display = (matchesSearch && matchesPrice && matchesTheme) ? '' : 'none';
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderProducts();
+      updateCartCount();
+      document.getElementById('filter-search').addEventListener('input', applyFilters);
+      document.getElementById('filter-price').addEventListener('change', applyFilters);
+      document.getElementById('filter-theme').addEventListener('change', applyFilters);
+    });
+
+    document.addEventListener('click', function (e) {
+      if (e.target.classList.contains('btn-cart')) {
+        const name = e.target.dataset.name;
+        const price = parseFloat(e.target.dataset.price);
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const existingItem = cart.find(item => item.name === name);
+        if (existingItem) {
+          existingItem.quantity += 1;
+        } else {
+          cart.push({ name, price, quantity: 1 });
+        }
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartCount();
+        alert(`Added "${name}" to your cart.`);
+      }
+    });
+  </script>
+
+  <footer class="site-footer">
+    <p>&copy; 2025 Chin's Piñatas. All rights reserved.</p>
+  </footer>
+</body>
+</html>

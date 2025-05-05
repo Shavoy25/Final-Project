@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us | Chin's Piñatas</title>
+  <link rel="stylesheet" href="css/main.css">
+  <style>
+    .contact-section {
+      max-width: 600px;
+      margin: 2em auto;
+      padding: 1em;
+      background: #fffef9;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .profile-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5em;
+      margin-top: 2em;
+    }
+    .profile-card {
+      background: #fff;
+      padding: 1em;
+      border-radius: 8px;
+      box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      gap: 1em;
+    }
+    .profile-card img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+    .profile-details h3 {
+      margin: 0.2em 0;
+    }
+    .profile-details p {
+      margin: 0.1em 0;
+      font-size: 0.95em;
+    }
+    .contact-form {
+      margin-top: 2em;
+    }
+    .contact-form label {
+      display: block;
+      margin-top: 1em;
+    }
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      padding: 0.5em;
+      margin-top: 0.3em;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .contact-form button {
+      margin-top: 1em;
+      padding: 0.6em 1.2em;
+      background-color: #00A651;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .map-container {
+      margin-top: 2em;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    iframe {
+      width: 100%;
+      height: 300px;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <img src="C:\Users\shavo\OneDrive\Desktop\Final Project\images\logo.jpeg" alt="Chin's Piñatas Logo" class="logo">
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="custom-orders.html">Custom Orders</a></li>
+        <li><a href="cart.html">Cart</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="Account.html">Account</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="FAQ.html">FAQ</a></li>
+        <li><a href="register.html">Login</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="contact-section">
+    <h1>Contact Our Team</h1>
+    <p>Need help or have a question? Reach out to any of our amazing team members below.</p>
+
+    <div class="profile-list">
+      <div class="profile-card">
+        <img src="C:\Users\shavo\OneDrive\Desktop\Final Project\images\shavoy.jpg" alt="John Chin">
+        <div class="profile-details">
+          <h3>Shavoy Brown</h3>
+          <p>Phone: (876) 344-5320</p>
+          <p>Email: sbrown24d@vtdi.edu.jm</p>
+        </div>
+      </div>
+      <div class="profile-card">
+        <img src="C:\Users\shavo\OneDrive\Desktop\Final Project\images\Tasheca.jpg" alt="Lisa Grant">
+        <div class="profile-details">
+          <h3>Tassheca Mullings</h3>
+          <p>Phone: (876) 810-8932</p>
+          <p>Email: Tmullings24b@vtdi.edu.jm</p>
+        </div>
+      </div>
+      <div class="profile-card">
+        <img src="images/profile3.jpg" alt="Marcus Lee">
+        <div class="profile-details">
+          <h3>Shamari Blackwood</h3>
+          <p>Phone: (876) 771-6307</p>
+          <p>Email: Sblackwood@vtdi.edu.jm</p>
+        </div>
+      </div>
+      <div class="profile-card">
+        <img src="C:\Users\shavo\OneDrive\Desktop\Final Project\images\oneil.jpg" alt="Danielle Brown">
+        <div class="profile-details">
+          <h3>Richard Oneil</h3>
+          <p>Phone: (876) 442-2656</p>
+          <p>Email: Richard.oneilas03@gmail.com</p>
+        </div>
+      </div>
+      <div class="profile-card">
+        <img src="C:\Users\shavo\OneDrive\Desktop\Final Project\images\samario.jpg" alt="Samuel Wright">
+        <div class="profile-details">
+          <h3>Samrio Smalling</h3>
+          <p>Phone: (876) 845-0233</p>
+          <p>Email: Samariosmalling15@gmil.com</p>
+        </div>
+      </div>
+    </div>
+
+    <section class="contact-form">
+      <h2>Send Us a Message</h2>
+      <form>
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="message">Message</label>
+        <textarea id="message" name="message" rows="5" required></textarea>
+
+        <button type="submit">Send Message</button>
+      </form>
+    </section>
+
+    <section class="map-container">
+      <h2>Our Location</h2>
+      <iframe src="https://www.google.com/maps?q=Vocational Training and development Institute,+Jamaica&output=embed"></iframe>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2025 Chin's Piñatas. All rights reserved.</p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Custom Orders | Chin's Piñatas</title>
+  <link rel="stylesheet" href="css/main.css">
+ 
+</head>
+<body>
+  <header class="site-header">
+    <img src="C:\Users\shavo\OneDrive\Desktop\Final Project\images\logo.jpeg" alt="Chin's Piñatas Logo" class="logo">
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="custom-orders.html">Custom Orders</a></li>
+        <li><a href="cart.html">Cart</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="Account.html">Account</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="FAQ.html">FAQ</a></li>
+        <li><a href="register.html">Login</a></li>
+      
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <h1 style="text-align: center; margin-top: 1em;">Customize Your Piñata</h1>
+    <form class="custom-order" id="customOrderForm" action="/submit-custom-order" method="POST" enctype="multipart/form-data">
+      <label for="pinataImage">Upload Reference Image:</label>
+      <input type="file" name="pinataImage" id="pinataImage" accept="image/*" required>
+
+      <label for="shape">Choose Shape:</label>
+      <select name="shape" id="shape" required>
+        <option value="">--Select a shape--</option>
+        <option value="star">Star</option>
+        <option value="heart">Heart</option>
+        <option value="circle">Circle</option>
+        <option value="unicorn">Unicorn</option>
+      </select>
+
+      <label for="colors">Select Color Scheme (comma separated):</label>
+      <input type="text" name="colors" id="colors" placeholder="e.g. red, gold, white" required>
+
+      <label for="features">Signature Features:</label>
+      <textarea name="features" id="features" placeholder="Describe any special features or themes..." rows="4"></textarea>
+
+      <label for="name">Your Name:</label>
+      <input type="text" name="name" id="name" required>
+
+      <label for="address">Delivery Address:</label>
+      <textarea name="address" id="address" rows="3" required></textarea>
+
+      <p><strong>Total Price: $<span id="priceEstimate">0.00</span></strong></p>
+      <button type="submit">Submit Order</button>
+    </form>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('customOrderForm');
+      const shapeSelect = form.elements['shape'];
+      const priceDisplay = document.getElementById('priceEstimate');
+
+      function calculatePrice() {
+        let basePrice = 20;
+        switch (shapeSelect.value) {
+          case 'star': basePrice += 10; break;
+          case 'heart': basePrice += 12; break;
+          case 'circle': basePrice += 8; break;
+          case 'unicorn': basePrice += 25; break;
+        }
+        priceDisplay.textContent = basePrice.toFixed(2);
+      }
+
+      shapeSelect.addEventListener('change', calculatePrice);
+      window.addEventListener('load', calculatePrice);
+
+      form.addEventListener('submit', function(event) {
+        // Clear errors
+        form.querySelectorAll('.error-message').forEach(e => e.remove());
+        let valid = true;
+
+        function showError(element, message) {
+          const error = document.createElement('div');
+          error.className = 'error-message';
+          error.textContent = message;
+          element.insertAdjacentElement('afterend', error);
+        }
+
+        const image = document.getElementById('pinataImage');
+        const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+        if (!image.files.length || !allowedTypes.includes(image.files[0].type)) {
+          showError(image, 'Please upload a valid image file (JPG or PNG).');
+          valid = false;
+        }
+
+        const shape = shapeSelect;
+        if (!shape.value) {
+          showError(shape, 'Please choose a shape.');
+          valid = false;
+        }
+
+        const colors = document.getElementById('colors');
+        if (!colors.value.trim() || !colors.value.includes(',')) {
+          showError(colors, 'Provide at least two colors, separated by commas.');
+          valid = false;
+        }
+
+        const name = document.getElementById('name');
+        if (!name.value.trim()) {
+          showError(name, 'Name is required.');
+          valid = false;
+        }
+
+        const address = document.getElementById('address');
+        if (!address.value.trim()) {
+          showError(address, 'Address is required.');
+          valid = false;
+        }
+
+        if (!valid) {
+          event.preventDefault();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
